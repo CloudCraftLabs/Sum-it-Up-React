@@ -1,0 +1,48 @@
+.box1{
+    width: 80vw;
+    height: 6vh;
+    background: rgb(141, 128, 128);
+    animation-name: anime;
+    animation-timing-function: linear;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    margin: 2vh 0;
+    border-radius: 10vh;
+    margin-left: 6%;
+}
+.box2{
+    width: 65vw;
+    height: 6vh;
+    background: rgb(148, 130, 130);
+    animation-name: anime;
+    animation-timing-function: linear;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    margin: 2vh 0;
+    border-radius: 10vh;
+    margin-left: 6%;
+
+}
+.box3{
+    width: 40vw;
+    height: 6vh;
+    background: rgb(133, 116, 116);
+    animation-name: anime;
+    animation-timing-function: linear;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    margin: 2vh 0;
+    border-radius: 10vh;
+    margin-left: 6%;
+}
+
+@keyframes anime {
+    0%{
+        opacity: 0;
+      
+    }
+    100%{
+        opacity: 1;
+        
+    }
+}

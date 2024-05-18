@@ -1,0 +1,13 @@
+{
+    "name":"Text Summarizer",
+    "description":"Summarizer the text",
+    "version":"1.0",
+    "manifest_version":3,
+    "action":{
+      
+        "default_title":"Text Summarizer",
+        "default_popup":"index.html"
+
+    }
+
+}
