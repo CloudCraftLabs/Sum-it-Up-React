@@ -1,5 +1,96 @@
 
 
+
+function feature({type,icon,text}){
+  var featureContainer = document.createElement('div');
+  featureContainer.addEventListener('mouseenter',()=>{
+    featureContainer.style.scale = '1.16'
+  })
+  featureContainer.addEventListener('mouseleave',()=>{
+    featureContainer.style.scale = '1'
+  })
+  featureContainer.style.cssText = `
+  width:4vh;
+  height:4vh;
+  background-color:#fff;
+  border-radius:50%;
+  margin-top:2vh;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+ 
+  `
+  if(type==="copy"){
+    var copyToClipboard = document.createElement('img');
+    copyToClipboard.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlklEQVR4nO2TsQkEIRBFDe3JxEBke7EAw0ntyUBEzAxswMA6DOYY4aJhhdtN78M3UF8w8hT4IoKWlBJe14XGmGN77xy21qJSCr33x44xOKy1RgDYG3NOjDHetpSCay0OEyilRCHEsc45DtPsdHgKAOz7fxgePlhrbQvwCP6m1rrhEMJtSVMyksFkDglw8pv+QM6Zw7/mA8iIvW5KkXTJAAAAAElFTkSuQmCC"
+    featureContainer.style.cursor = 'pointer'
+    featureContainer.addEventListener('click',()=>{
+      navigator.clipboard.writeText(text)
+      copyToClipboard.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAVklEQVR4nGP4TyRgoIrCn3++/D/8YBp+hSBFyy+l/b/2ajtuhT/+fEZRBFd48/We/9df7URRdP3VLkw3wiQvPl8PVQTRhNUz6G7C6+t////i8hvx4QgAR8+CWvgozIgAAAAASUVORK5CYII="
+      setTimeout(()=>{
+        copyToClipboard.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlklEQVR4nO2TsQkEIRBFDe3JxEBke7EAw0ntyUBEzAxswMA6DOYY4aJhhdtN78M3UF8w8hT4IoKWlBJe14XGmGN77xy21qJSCr33x44xOKy1RgDYG3NOjDHetpSCay0OEyilRCHEsc45DtPsdHgKAOz7fxgePlhrbQvwCP6m1rrhEMJtSVMyksFkDglw8pv+QM6Zw7/mA8iIvW5KkXTJAAAAAElFTkSuQmCC"
+        
+      },1000)
+     })
+  
+featureContainer.appendChild(copyToClipboard)
+  }
+ else if(type === 'share'){
+    var share = document.createElement('img');
+    share.src = icon;
+    featureContainer.appendChild(share);
+    
+  }
+  else if(type==='download' ){
+    var download = document.createElement('img');
+    download.src = icon;
+    featureContainer.appendChild(download);
+    download.addEventListener('click',()=>{
+     console.log("hello");
+    })
+  }
+  return featureContainer;
+}
+function toolbar ({first}){
+  var feature1 = feature({type:"copy",icon:"",text:first[1]});
+  var feature2 = feature({type:"share",icon:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA5ElEQVR4nLWSvQmEQBCFF839wSIMTTRRe9ACjCxCLEFB0MwytAS1BLEIA00MFEF4h4LLcYK3d8c9GNhgPua92SH4QYSlaVkWBEEAx3FQ1/VncBRFIIQcJUkS1nVlg8dxhG3bFOZ5HtM03cPbtiHPcyiKAlVVYRjGMTXLsqvteZ5RFAXatkVVVdA0DYIgIEkSavNVFDZN87DFcdxRvu+j7/sLcIGHYaCZ9vI8Dywi58OyrO8mn5nLskTXdZ9nfrdtXdchiiLSNKU9//nnZ8VxTGFZltkvbNd+22EYwnVdNE3DbvtOD+wS+klOEOAfAAAAAElFTkSuQmCC",text:first[2]});
+  var feature3 = feature({type:"download",icon:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAw0lEQVR4nM2SMQ6EIBBFCYXhWBZGw028gZ221Faeg8KGxERr7mBrZWnJ38wUmtV11WyzPxl+Bv4DQhD4QeJsYZomJEnC/hie5xlFUbA/hpdlgXOO/TE8jiOEEOx/DocQkOc52rZ9g6mn+RDC95OrqkIURajrmuGmaaCU4pe/de2yLCGlZJic+k8SNFhr4b0/bEDwHvTec36F4zjm6+7Vdd1hjnKUX+E0TfkrGmMui3JZlm1w3/fQWvPCVVFuGIbzB7urFw/kDHN3hODIAAAAAElFTkSuQmCC",text:first[1]});
+  var toolbarContainer = document.createElement('div');
+  toolbarContainer.style.cssText = `
+  background-color:transparent;
+  width:6vh;
+  height:36%;
+position:absolute;
+top:8.5vh;
+right:0;
+display:flex;
+align-items:center;
+flex-direction:column;
+z-index:999999;
+
+  `
+  console.log(first[1]);
+  toolbarContainer.appendChild(feature1);
+  toolbarContainer.appendChild(feature2);
+  toolbarContainer.appendChild(feature3);
+  toolbarContainer.addEventListener('mouseenter', function(){
+    feature1.style.display = "flex";
+    feature2.style.display = "flex";
+    feature3.style.display = "flex";
+    
+    toolbarContainer.style.backgroundColor = "rgba(83, 79, 79, 0.918)";
+    console.log("hello");
+  })
+  toolbarContainer.addEventListener('mouseleave', function(){
+    toolbarContainer.style.backgroundColor = "transparent";
+    feature1.style.display = "none";
+    feature2.style.display = "none";
+    feature3.style.display = "none";
+  })
+  return toolbarContainer;
+}
+
 function label(div){
   var labelFigure = document.createElement("div");
   window.addEventListener('mousedown',(e)=>{
@@ -40,7 +131,7 @@ function page1Content(){
   selectSummarizationType.style.cssText = `
   border:none;
   padding:2px 3px;
-  border-radius:2vh;
+  border-radius:1vh;
   font-size:15px;
   outline:none;
   cursor:pointer;
@@ -78,22 +169,7 @@ page1Head.appendChild(selectSummarizationType)
 
 
  
-    var copyToClipboard = document.createElement('img');
-    copyToClipboard.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAABI0lEQVR4nO2UPWvCUBSG88M0jg3VtV2ytv9BB9FACMHSageDiDQd2iGIEiJtQUJaK63QUQKV0N10UMzHYKe3eCeh9zZiS7s4PMPlHh7uPZzzcnupFH4T7k+EQjqNa12HP50iCkMq776PrmFgP5NJFqqShDiOcV6pQC4WqZwqCuazGbRajS08yGZxIssw2208DQaJ37sxTdzbNlu4ElmdDuHRcRKFtDpu/bC63Amx6yG2GpuuYeB5OEycw1vLgtPvs4V3vR4RlfN5fCyXuGw2yfrRaGkaWc8zVWULpUKBiI5FEfVqFe54DG8yofLqurhoNCDw/Pfh8GDbiKIIV7oOpVRihsORKG4WXwLPk9e9eR6CxeJLbIVBgJfRCIe53D8G7E+En0j6aTmugWL6AAAAAElFTkSuQmCC"
-    copyToClipboard.style.cursor = 'pointer'
-  var contentFooter = document.createElement('div');
-  contentFooter.style.cssText = `
-  width: 100%;
-  height: 25px;
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  gap: 3vh;
-  background-color: red;
-  
-  top: 0;`
-  // contentFooter.appendChild(like);
- contentFooter.appendChild(copyToClipboard)
+    
 
     var contentParagraph = document.createElement('p');
     contentParagraph.innerHTML = `Are you looking to bring your website's text to life with captivating animations? Look no further! We are thrilled to present our latest update, featuring a comprehensive collection of free HTML and CSS text animation code examples. This compilation showcases a wide range of text animations, including scrolling effects, fading effects, bouncing effects, and much more.
@@ -108,7 +184,7 @@ page1Head.appendChild(selectSummarizationType)
    height: 90%;
    overflow-y:scroll;
    padding :2vw 0.5vw;
-   font-size: 15px;
+   font-size: 16px;
    line-height: 20px;
    background-color:transparent;
    font-weight:300;
@@ -124,14 +200,7 @@ page1Head.appendChild(selectSummarizationType)
    `
 
    
-   copyToClipboard.addEventListener('click',()=>{
-    navigator.clipboard.writeText(contentParagraph.innerHTML)
-    copyToClipboard.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAArElEQVR4nO3SsQ3CMBCF4QzmQyH25e3BBCAKCqBAFDAGmz4UORJBxsbGETQUKfPlv8s1MIZzPs0f5M93qJuO/aqdB9RtR3sD3UUJkTpQ1yN2dcSycuQYhk/AFIYAXOTuzBGt3xli4PBlPdso+q4MT6AI3dH6F04uQHPKEIwshm7v0Wlpbhle7lAM9fAoLSlD9C+LUMfSkjIkz2Yo3XXFGJJ3KMI+c8yqw/46eAc1N8e04fyU4AAAAABJRU5ErkJggg=="
-    setTimeout(()=>{
-      copyToClipboard.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAABI0lEQVR4nO2UPWvCUBSG88M0jg3VtV2ytv9BB9FACMHSageDiDQd2iGIEiJtQUJaK63QUQKV0N10UMzHYKe3eCeh9zZiS7s4PMPlHh7uPZzzcnupFH4T7k+EQjqNa12HP50iCkMq776PrmFgP5NJFqqShDiOcV6pQC4WqZwqCuazGbRajS08yGZxIssw2208DQaJ37sxTdzbNlu4ElmdDuHRcRKFtDpu/bC63Amx6yG2GpuuYeB5OEycw1vLgtPvs4V3vR4RlfN5fCyXuGw2yfrRaGkaWc8zVWULpUKBiI5FEfVqFe54DG8yofLqurhoNCDw/Pfh8GDbiKIIV7oOpVRihsORKG4WXwLPk9e9eR6CxeJLbIVBgJfRCIe53D8G7E+En0j6aTmugWL6AAAAAElFTkSuQmCC"
-      
-    },1000)
-   })
+   
     var contentBox = document.createElement("div");
     var textBox = document.createElement("div");
     textBox.style.cssText = `
@@ -147,8 +216,10 @@ page1Head.appendChild(selectSummarizationType)
 
       
     `
+    
     textBox.appendChild(page1Head);
     textBox.appendChild(contentParagraph);
+    textBox.appendChild(toolbar({first:[true,contentParagraph.textContent]}));
     // textBox.appendChild(contentFooter)
     // textBox.appendChild(flower);
     contentBox.style.cssText = `
@@ -163,6 +234,7 @@ page1Head.appendChild(selectSummarizationType)
     background-color:transparent;
     
     `
+    
     contentBox.appendChild(textBox);
     return contentBox;
 }
@@ -179,6 +251,7 @@ function footerNavigation (page1,page2,page3,currentPage) {
   top : 1.8vh;
 left : 5%;
 position:absolute;
+z-index:999999;
   `
   var isLiked = false;
   var like  = document.createElement('img');
@@ -362,7 +435,7 @@ function Left(className,circle){
     left.style.display = "flex";
     left.style.justifyContent = "center";
     left.style.alignItems = "center";
-    left.style.zIndex = "9999999"
+    left.style.zIndex = "99999"
     left.appendChild(circle);
     return left;
 }
@@ -374,11 +447,12 @@ function Right(className,circle){
     right.style.right = "0";
     right.style.width = "40px";
     right.style.height = "100%";
-    right.style.backgroundColor = "transparent";
+    right.style.backgroundColor = "tranparent";
     right.style.display = "flex";
     right.style.justifyContent = "center";
     right.style.alignItems = "center";
-    right.style.zIndex = "9999999"
+    right.style.zIndex = "99999"
+    
     right.appendChild(circle);
     return right;
     
@@ -558,9 +632,9 @@ document.body.appendChild(div);
 //   });
 
 
-chrome.runtime.sendMessage({greetings:"hello"},function(response){
-  console.log(response.farewell)
-})
+// chrome.runtime.sendMessage({greetings:"hello"},function(response){
+//   console.log(response.farewell)
+// })
 chrome.runtime.onMessage.addListener(function(request,sender,sendResponse){
 console.log(request.message)
 if(request.message==='start'){
