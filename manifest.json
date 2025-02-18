@@ -1,0 +1,51 @@
+{
+    "manifest_version": 3,
+    "name": "Summarizer",
+    "version": "1.0",
+    "description": "This is my Summarizer",
+    "icons": {
+        "128": "static/images/icons/icon128.jpg",
+        "48": "static/images/icons/icon48.jpg",
+        "16": "static/images/icons/icon16.jpg"
+    },
+    "action": {
+        "default_icon": "static/images/icons/icon16.jpg",
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "service_worker": "static/scripts/background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["static/scripts/jquery-3.6.0.min.js", "static/scripts/content.js"],
+            "css": ["static/styles/style.css"]
+        }
+    ],
+    "permissions": [
+        "storage",
+        "notifications",
+        "contextMenus",
+        "tts",
+        "activeTab"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "panel.html",
+                "static/images/stickers/close.png",
+                "static/images/stickers/before.png",
+                "static/images/stickers/next.png",
+                "static/images/stickers/copy.png",
+                "static/images/stickers/download.png",
+                "static/images/stickers/share.png",
+                "static/images/stickers/audio.png",
+                "static/images/stickers/highlighter.png"
+            ],
+            "matches": ["<all_urls>"]
+        }
+    ]
+}

@@ -1,0 +1,88 @@
+<link rel="stylesheet" href="static/styles/style.css">
+
+<div id="summarizationPanel">
+    <div class="panel-header">
+        <div class="panel-header-hs hs1">
+            <div class="org-name">Summarization Panel</div>
+            <div id="closePanel"><img id="img-icon-close" class="img-icon" src="static/images/stickers/close.png" alt=""></div>
+        </div>
+    </div>
+
+    <div class="panel-main">
+        <div class="indi-tab tab-content" id="tab1">
+            <div class="tab-cntnt">
+                <div class="tab-cntnt-row">
+                    <div class="output-cntnr">
+                        <div id="responseOutput">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="indi-tab tab-content" id="tab2" style="display: none;">
+            <p>This is the second tab content.</p>
+            <a href="https://example.com">Link to Example</a>
+        </div>
+        <div class="indi-tab tab-content" id="tab3" style="display: none;">
+            <p>This is the third tab content.</p>
+            <a href="https://example.com">Link to Example</a>
+        </div>
+    </div>
+
+    <div class="panel-footer">
+        <div class="panel-footer-fs fs1">
+            <div class="like-btn-cntnr">
+                <button id="like-btn">❤</button>
+            </div>
+            <div class="tabs-btn-cntnr">
+                <ul class="tabs">
+                    <li class="tab" data-tab="tab1"></li>
+                    <li class="tab" data-tab="tab2"></li>
+                    <li class="tab" data-tab="tab3"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <button class="tab-chng-btn" id="previousTab"><img id="img-icon-before" class="img-icon" src="static/images/stickers/before.png" alt=""></button>
+    <button class="tab-chng-btn" id="nextTab"><img id="img-icon-next" class="img-icon" src="static/images/stickers/next.png" alt=""></button>
+    
+    <div class="side-sub-panel-cntnr">
+        <div class="side-sub-panel-inner">
+            <div class="side-sub-panel-cntnt">
+                <div class="side-sub-panel-nav">
+                    <div class="indi-side-panel-nav-link">
+                        <div>
+                            <input id="option_copy" type="checkbox" hidden>
+                            <label for="option_copy"><img id="img-icon-copy" class="img-icon" src="static/images/stickers/copy.png" alt=""></label>
+                        </div>
+                    </div>
+                    <div class="indi-side-panel-nav-link">
+                        <div>
+                            <input id="option_download" type="checkbox" hidden>
+                            <label for="option_download"><img id="img-icon-download" class="img-icon" src="static/images/stickers/download.png" alt=""></label>
+                        </div>
+                    </div>
+                    <div class="indi-side-panel-nav-link">
+                        <div>
+                            <input id="option_share" type="checkbox" hidden>
+                            <label for="option_share"><img id="img-icon-share" class="img-icon" src="static/images/stickers/share.png" alt=""></label>
+                        </div>
+                    </div>
+                    <div class="indi-side-panel-nav-link">
+                        <div>
+                            <input id="option_audio" type="checkbox" hidden>
+                            <label for="option_audio"><img id="img-icon-audio" class="img-icon" src="static/images/stickers/audio.png" alt=""></label>
+                        </div>
+                    </div>
+                    <div class="indi-side-panel-nav-link">
+                        <div>
+                            <input id="option_highlighter" type="checkbox" hidden>
+                            <label for="option_highlighter"><img id="img-icon-highlighter" class="img-icon" src="static/images/stickers/highlighter.png" alt=""></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
