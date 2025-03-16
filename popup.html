@@ -4,25 +4,73 @@
     <meta charset="UTF-8">
     <title>Summarizer</title>
     <script src="static/scripts/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/styles/popup.css">
     <script src="static/scripts/popup.js"></script>
     <script src="static/scripts/content.js"></script>
-    <link rel="stylesheet" href="static/styles/popup.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <div class="logo-wrapper">
+    <div class="app-container">
+        <header class="app-header">
+            <div class="brand">
                 <img src="static/images/icons/icon48.jpg" alt="Summarizer Logo" class="logo">
                 <h1>Summarizer</h1>
             </div>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
         </header>
-        <main class="main-content">
+
+        <main class="app-content">
+            <div class="summary-options">
+                <div class="option-group">
+                    <label class="option-label">Summary Length</label>
+                    <div class="button-group">
+                        <button class="option-btn active" data-length="short">Short</button>
+                        <button class="option-btn" data-length="medium">Medium</button>
+                        <button class="option-btn" data-length="long">Long</button>
+                    </div>
+                </div>
+                
+                <div class="option-group">
+                    <label class="option-label">Style</label>
+                    <select class="style-select" id="summaryStyle">
+                        <option value="concise">Concise</option>
+                        <option value="detailed">Detailed</option>
+                        <option value="bullet">Bullet Points</option>
+                    </select>
+                </div>
+            </div>
+
             <button type="button" id="openSummarizationPanel" class="primary-button">
+                <i class="fas fa-magic button-icon"></i>
                 <span class="button-text">Summarize Page</span>
                 <div class="loading-spinner"></div>
             </button>
+
+            <div class="quick-actions">
+                <button class="action-button" title="Copy to Clipboard">
+                    <i class="fas fa-copy"></i>
+                </button>
+                <button class="action-button" title="Share Summary">
+                    <i class="fas fa-share-alt"></i>
+                </button>
+                <button class="action-button" title="Download Summary">
+                    <i class="fas fa-download"></i>
+                </button>
+                <button class="action-button" title="Text-to-Speech">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+            </div>
         </main>
+
+        <footer class="app-footer">
+            <div class="word-count">
+                <i class="fas fa-chart-bar"></i>
+                <span>Estimated read time: <strong>2 mins</strong></span>
+            </div>
+        </footer>
     </div>
 </body>
 </html>

@@ -19,46 +19,7 @@
                             console.log('summary_type: ',summary_type)
                         
                             console.warn('sending Request')
-                            $.ajax({
-                                url: 'https://rago6qu4uneepm7wivuf5sbu340zxnes.lambda-url.ap-south-1.on.aws/summary-via-url',
-                                type: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                data: JSON.stringify({
-                                    text_url: text_url,
-                                    summary_type: summary_type
-                                }),
-                                success: function(response) {
-                                    console.log('Success:', response);
-                                    $('#response_output').html(response['data'])
-
-                                    var cntnr = $('#response_output').get(0)
-                                    let html = cntnr.innerHTML;
-                                    html = html.replace(/\*\*(.*?)\*\*/g, (match, p1) => {
-                                        return `<h3>${p1}</h3>`;
-                                    });
-                                    html = html.replace(/\*(.*?)\*/g, (match, p1) => {
-                                        return `<div>${p1}</div>`;
-                                    });
-                                    html = html.replace(/\*/g, '<br>');
-                                    cntnr.innerHTML = html; 
-                                    
-                                    
-
-                                    // convertToH3($('#response_output').get(0))
-                                    // convertToDiv($('#response_output').get(0))
-                                    // replace_astersik_to_br($('#response_output').get(0))
-                                    $('#response_flowchart').html()
-                                    $('#response_input_summary').html()
-                                },
-                                error: function(xhr, status, error) {
-                                    console.error(xhr, status, error);
-                                    $('#response_output').html(error)
-                                    $('#response_flowchart').html(error)
-                                    $('#response_input_summary').html(error)
-                                }
-                            });
+                            loadSummary()
                         
                         })
                         ()">
@@ -201,3 +162,61 @@
         </body>
     </div>
 </div>
+
+<script>
+function loadSummary() {
+    var text_url = $(location).prop('href');
+    var summary_type = $('#summary_type').val();
+    var selectedLength = localStorage.getItem('summary_length') || 'short';
+    var selectedStyle = localStorage.getItem('summary_style') || 'concise';
+
+    // Show loader
+    $(".loader-cntnr").show();
+
+    $.ajax({
+        url: 'https://rago6qu4uneepm7wivuf5sbu340zxnes.lambda-url.ap-south-1.on.aws/summary-via-url',
+        type: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: JSON.stringify({
+            text_url: text_url,
+            summary_type: summary_type,
+            length: selectedLength,
+            style: selectedStyle
+        }),
+        success: function(response) {
+            // Hide loader
+            $(".loader-cntnr").hide();
+
+            if (response['data'] != "UNABLE ACCESS") {
+                console.log('Success:', response);
+                $("#response_output").html(response['data']);
+                convertToH3($("#response_output").get(0));
+                convertToDiv($("#response_output").get(0));
+                replace_astersik_to_br($("#response_output").get(0));
+                $("#response_flowchart").html();
+                $("#response_input_summary").html();
+            } else {
+                response['data'] = "We are unable to access the data due to private user site!";
+                console.log('Failure:', response);
+                $("#response_output").html(response['data']);
+                convertToH3($("#response_output").get(0));
+                convertToDiv($("#response_output").get(0));
+                replace_astersik_to_br($("#response_output").get(0));
+                $("#response_flowchart").html();
+                $("#response_input_summary").html();
+            }
+        },
+        error: function(xhr, status, error) {
+            // Hide loader
+            $(".loader-cntnr").hide();
+
+            console.error(xhr, status, error);
+            $("#response_output").html(error);
+            $("#response_flowchart").html(error);
+            $("#response_input_summary").html(error);
+        }
+    });
+}
+</script>

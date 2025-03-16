@@ -23,12 +23,12 @@ function replace_astersik_to_br(cntnr) {
 
 
 function loadSummary() {
-    var text_url = $(location).prop('href')
-    // var summay_type = document.getElementById("summary_type")
-    var summary_type = $('#summary_type').val()
-    console.log("summary_type: ",summary_type)
-
-    console.warn("sending Request")
+    var text_url = $(location).prop('href');
+    var summary_type = $('#summary_type').val();
+    var selectedLength = localStorage.getItem('summary_length') || 'short';
+    var selectedStyle = localStorage.getItem('summary_style') || 'concise';
+    
+    console.warn("sending Request");
     $.ajax({
         url: 'https://rago6qu4uneepm7wivuf5sbu340zxnes.lambda-url.ap-south-1.on.aws/summary-via-url',
         type: 'POST',
@@ -37,34 +37,35 @@ function loadSummary() {
         },
         data: JSON.stringify({
             text_url: text_url,
-            summary_type: summary_type
+            summary_type: summary_type,
+            length: selectedLength,
+            style: selectedStyle
         }),
         success: function(response) {
             if (response['data'] != "UNABLE ACCESS"){
                 console.log('Success:', response);
-                $("#response_output").html(response['data'])
-                convertToH3($("#response_output").get(0))
-                convertToDiv($("#response_output").get(0))
-                replace_astersik_to_br($("#response_output").get(0))
-                $("#response_flowchart").html()
-                $("#response_input_summary").html()
+                $("#response_output").html(response['data']);
+                convertToH3($("#response_output").get(0));
+                convertToDiv($("#response_output").get(0));
+                replace_astersik_to_br($("#response_output").get(0));
+                $("#response_flowchart").html();
+                $("#response_input_summary").html();
+            } else {
+                response['data'] = "We are unable to access the data due to private user site!";
+                console.log('Failure:', response);
+                $("#response_output").html(response['data']);
+                convertToH3($("#response_output").get(0));
+                convertToDiv($("#response_output").get(0));
+                replace_astersik_to_br($("#response_output").get(0));
+                $("#response_flowchart").html();
+                $("#response_input_summary").html();
             }
-        else{
-            response['data'] = "We are unable to access the data due to private user site!"
-            console.log('Failure:', response);
-            $("#response_output").html(response['data'])
-            convertToH3($("#response_output").get(0))
-            convertToDiv($("#response_output").get(0))
-            replace_astersik_to_br($("#response_output").get(0))
-            $("#response_flowchart").html()
-            $("#response_input_summary").html()
-        }
         },
         error: function(xhr, status, error) {
             console.error(xhr, status, error);
-            $("#response_output").html(error)
-            $("#response_flowchart").html(error)
-            $("#response_input_summary").html(error)
+            $("#response_output").html(error);
+            $("#response_flowchart").html(error);
+            $("#response_input_summary").html(error);
         }
     });
 
@@ -351,17 +352,37 @@ window.onload = createOpenPanelButton;
 const buttonPosition = { left: null, top: null, right: null };
 let isDragging = false;
 
+// Listen for messages from popup
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if(request.todo == "openSummarizationPanel") {
-        createPanel()
+    console.log("Message received:", request);
+    
+    if (request.todo === "openSummarizationPanel") {
+        // Store the selected options
+        if (request.options) {
+            localStorage.setItem('summary_length', request.options.length);
+            localStorage.setItem('summary_style', request.options.style);
+        }
+        createPanel();
+    } else if (request.todo === "copy_to_clipboard") {
+        $('#option_copy').prop('checked', true).trigger('change');
+    } else if (request.todo === "share_summary") {
+        // Implement share functionality
+        const text = $('#response_output').text();
+        if (navigator.share) {
+            navigator.share({
+                title: 'Summary',
+                text: text
+            });
+        }
+    } else if (request.todo === "download_summary") {
+        $('#option_download').prop('checked', true).trigger('change');
+    } else if (request.todo === "text-to-speech") {
+        $('#option_audio').prop('checked', true).trigger('change');
+        const text = $('#response_output').text();
+        const utterance = new SpeechSynthesisUtterance(text);
+        window.speechSynthesis.speak(utterance);
     }
-
-    if(request.todo == "addOpenSummarizationPanelButton") { 
-        createOpenPanelButton()
-    }
-})
-
-
+});
 
 function sendMessage() {
     const input = document.getElementById('messageInput');
