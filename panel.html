@@ -1,0 +1,203 @@
+
+<div id="summarizationPanel">
+    <div class="panel-header">
+        <div class="panel-header-hs hs1">
+            <div class="org-name">Summarization Panel</div>
+            <div id="closePanel"><img id="img-icon-close" class="img-icon" src="static/images/stickers/close.png" alt=""></div>
+        </div>
+    </div>
+
+    <div class="panel-main">
+        <div class="tab-common-header">
+            <div class="tch-hr">
+                <div class="ln-form-cntnr">
+                    <form action="javascript:void(0)">
+                        <select name="summary_type" id="summary_type" onchange="(function(){
+                            var text_url = $(location).prop('href')
+                            var summary_type = $('#summary_type').val()
+                            
+                            console.log('summary_type: ',summary_type)
+                        
+                            console.warn('sending Request')
+                            $.ajax({
+                                url: 'https://rago6qu4uneepm7wivuf5sbu340zxnes.lambda-url.ap-south-1.on.aws/summary-via-url',
+                                type: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                data: JSON.stringify({
+                                    text_url: text_url,
+                                    summary_type: summary_type
+                                }),
+                                success: function(response) {
+                                    console.log('Success:', response);
+                                    $('#response_output').html(response['data'])
+
+                                    var cntnr = $('#response_output').get(0)
+                                    let html = cntnr.innerHTML;
+                                    html = html.replace(/\*\*(.*?)\*\*/g, (match, p1) => {
+                                        return `<h3>${p1}</h3>`;
+                                    });
+                                    html = html.replace(/\*(.*?)\*/g, (match, p1) => {
+                                        return `<div>${p1}</div>`;
+                                    });
+                                    html = html.replace(/\*/g, '<br>');
+                                    cntnr.innerHTML = html; 
+                                    
+                                    
+
+                                    // convertToH3($('#response_output').get(0))
+                                    // convertToDiv($('#response_output').get(0))
+                                    // replace_astersik_to_br($('#response_output').get(0))
+                                    $('#response_flowchart').html()
+                                    $('#response_input_summary').html()
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error(xhr, status, error);
+                                    $('#response_output').html(error)
+                                    $('#response_flowchart').html(error)
+                                    $('#response_input_summary').html(error)
+                                }
+                            });
+                        
+                        })
+                        ()">
+                            <option value="abstractive">Abstractive</option>
+                            <option value="keywords">Keywords</option>
+                            <option selected value="factual">Factual</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="panel-tabs-cntnr">
+            <div class="indi-tab tab-content" id="tab1">
+                <div class="tab-cntnt">
+                    <div class="tab-cntnt-row">
+                        <div class="output-cntnr">
+                            <div id="response_output">
+                                <div class="loader-cntnr">
+                                    <div class="loader"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="indi-tab tab-content" id="tab2" style="display: none;">
+                <div class="tab-cntnt">
+                    <div class="tab-cntnt-row">
+                        <div class="output-cntnr">
+                            <div id="response_flowchart">
+                                <div class="loader-cntnr">
+                                    <div class="loader"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="indi-tab tab-content" id="tab3" style="display: none;">
+                <div class="tab-cntnt">
+                    <div class="tab-cntnt-row">
+                        <div class="output-cntnr">
+                            <div id="response_input_summary">
+                                <div class="loader-cntnr">
+                                    <div class="loader"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-container">
+                            <div class="messages" id="messages">
+                                <!-- Messages will be appended here -->
+                            </div>
+                        
+                            <div class="input-container">
+                                <textarea id="messageInput" rows="1" placeholder="Type message here..."></textarea>
+                                <button onclick="sendMessage()">Send</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-footer">
+        <div class="panel-footer-fs fs1">
+            <div class="like-btn-cntnr">
+                <button id="like-btn">❤</button>
+            </div>
+            <div class="tabs-btn-cntnr">
+                <ul class="tabs">
+                    <li class="tab" data-tab="tab1"></li>
+                    <li class="tab" data-tab="tab2"></li>
+                    <li class="tab" data-tab="tab3"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <button class="tab-chng-btn" id="previousTab"><img id="img-icon-before" class="img-icon" src="static/images/stickers/before.png" alt=""></button>
+    <button class="tab-chng-btn" id="nextTab"><img id="img-icon-next" class="img-icon" src="static/images/stickers/next.png" alt=""></button>
+    
+    <div class="side-sub-panel-cntnr">
+        <div class="side-sub-panel-inner">
+            <div class="side-sub-panel-cntnt">
+                <div class="side-sub-panel-nav">
+                    <div class="indi-side-panel-nav-link">
+                        <div>
+                            <input id="option_copy" type="checkbox" hidden>
+                            <label for="option_copy"><img id="img-icon-copy" class="img-icon" src="static/images/stickers/copy.png" alt=""></label>
+                        </div>
+                    </div>
+                    <div class="indi-side-panel-nav-link">
+                        <div>
+                            <input id="option_download" type="checkbox" hidden>
+                            <label for="option_download"><img id="img-icon-download" class="img-icon" src="static/images/stickers/download.png" alt=""></label>
+                        </div>
+                    </div>
+                    <div class="indi-side-panel-nav-link">
+                        <div>
+                            <input id="option_share" type="checkbox" hidden>
+                            <label for="option_share"><img id="img-icon-share" class="img-icon" src="static/images/stickers/share.png" alt=""></label>
+                        </div>
+                    </div>
+                    <div class="indi-side-panel-nav-link">
+                        <div>
+                            <input id="option_audio" type="checkbox" hidden>
+                            <label for="option_audio"><img id="img-icon-audio" class="img-icon" src="static/images/stickers/audio.png" alt=""></label>
+                        </div>
+                    </div>
+                    <div class="indi-side-panel-nav-link">
+                        <div>
+                            <input id="option_highlighter" type="checkbox" hidden>
+                            <label for="option_highlighter"><img id="img-icon-highlighter" class="img-icon" src="static/images/stickers/highlighter.png" alt=""></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="print-cntnt-cntnr">
+        <body>
+            <header>
+                <div class="hs hs-1">
+                    <div class="org-title">Summary Generator</div>
+                </div>
+            </header>
+            <main>
+                <div class="wrpr">
+                    <section>
+                        <div class="sctn-wrpr">
+                            <div class="sctn-header">Summary</div>
+                            <div class="sctn-cntnt">
+                                <div id="summary-cntnt"></div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </body>
+    </div>
+</div>

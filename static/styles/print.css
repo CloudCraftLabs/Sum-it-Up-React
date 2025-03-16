@@ -1,0 +1,39 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+}
+.hs {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.hs-1 {
+    padding: 10px 10px;
+}
+
+.org-title {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #505050;
+}
+
+.wrpr {
+    padding: 20px 10px;
+}
+
+.sctn-header {
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
